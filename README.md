@@ -19,5 +19,6 @@ A responsive React + TypeScript application that allows users to:
 - Context API
 
 ## Run Locally
-npm install
+npm install  
+
 npm run dev
