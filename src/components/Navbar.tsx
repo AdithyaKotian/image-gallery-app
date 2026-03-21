@@ -27,7 +27,7 @@ function Navbar() {
         {isMobile ? (
           <>
             <button onClick={() => setOpen(!open)}>☰</button>
-            <h3>App</h3>
+            
           </>
         ) : (
           <div style={styles.desktopMenu}>
