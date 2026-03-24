@@ -1,46 +1,55 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 function Home() {
   const [name, setName] = useState("");
   const navigate = useNavigate();
 
-  return (
-    <div style={styles.container}>
-      <h2>Enter your name</h2>
+  const handleNavigate = () => {
+    navigate("/details", { state: { name } });
+  };
 
-      <input
-        style={styles.input}
+  return (
+    <Container>
+      <Title>Enter your name</Title>
+
+      <Input
+        value={name}
         onChange={(e) => setName(e.target.value)}
       />
 
-      <button
-        style={styles.button}
-        onClick={() => navigate("/details", { state: { name } })}
-      >
+      <Button onClick={handleNavigate}>
         Next
-      </button>
-    </div>
+      </Button>
+    </Container>
   );
 }
 
-const styles = {
-  container: {
-    maxWidth: "900px",
-    margin: "0 auto",
-    padding: 20
-  },
-  input: {
-    width: "100%",
-    padding: 10,
-    marginBottom: 10
-  },
-  button: {
-    padding: 10,
-    background: "blue",
-    color: "white",
-    border: "none"
-  }
-};
+/* styled-components */
+
+const Container = styled.div`
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+`;
+
+const Title = styled.h2`
+  margin-bottom: 10px;
+`;
+
+const Input = styled.input`
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+`;
+
+const Button = styled.button`
+  padding: 10px;
+  background: blue;
+  color: white;
+  border: none;
+  cursor: pointer;
+`;
 
 export default Home;

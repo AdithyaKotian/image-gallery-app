@@ -1,39 +1,43 @@
-type Props = {
+import styled from "styled-components";
+
+interface Props {
   page: number;
   setPage: (p: number) => void;
-};
+  hasNext: boolean;
+}
 
-function Pagination({ page, setPage }: Props) {
+function Pagination({ page, setPage, hasNext }: Props) {
   return (
-    <div>
-      <button
-        style={styles.button}
-        disabled={page === 1}
-        onClick={() => setPage(page - 1)}
-      >
+    <Container>
+      <Button disabled={page === 1} onClick={() => setPage(page - 1)}>
         Prev
-      </button>
+      </Button>
 
-      <span> Page {page} </span>
+      <span>Page {page}</span>
 
-      <button
-        style={styles.button}
-        disabled={page === 5}
-        onClick={() => setPage(page + 1)}
-      >
+      <Button disabled={!hasNext} onClick={() => setPage(page + 1)}>
         Next
-      </button>
-    </div>
+      </Button>
+    </Container>
   );
 }
 
-const styles = {
-  button: {
-    background: "blue",
-    color: "white",
-    margin: 10,
-    padding: 8
-  }
-};
-
 export default Pagination;
+
+const Container = styled.div`
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+`;
+
+const Button = styled.button`
+  background: ${({ theme }) => theme.colors.accent};
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.5;
+  }
+`;

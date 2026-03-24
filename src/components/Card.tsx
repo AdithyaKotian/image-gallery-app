@@ -1,20 +1,22 @@
-type ImageType = {
+import styled from "styled-components";
+
+export type ImageType = {
   id: string;
   author: string;
   download_url: string;
 };
 
-type Props = {
+interface Props {
   img: ImageType;
   onSave?: (img: ImageType) => void;
   showCheckbox?: boolean;
-};
+}
 
 function Card({ img, onSave, showCheckbox }: Props) {
   return (
-    <div style={styles.card}>
-      <img src={img.download_url} width="100%" height={100} />
-      <p>{img.author}</p>
+    <CardBox>
+      <img src={img.download_url} alt={img.author} />
+      <p>{img.author || "Unknown"}</p>
 
       {showCheckbox && (
         <input
@@ -22,17 +24,24 @@ function Card({ img, onSave, showCheckbox }: Props) {
           onChange={() => onSave?.(img)}
         />
       )}
-    </div>
+    </CardBox>
   );
 }
 
-const styles = {
-  card: {
-    border: "1px solid black",
-    padding: 10,
-    width: "100%",
-    borderRadius: 8
-  }
-};
-
 export default Card;
+
+const CardBox = styled.div`
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  padding: 10px;
+  border-radius: 8px;
+
+  img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+  }
+
+  p {
+    color: ${({ theme }) => theme.colors.text};
+  }
+`;

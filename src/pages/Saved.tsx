@@ -1,51 +1,58 @@
 import { useContext } from "react";
-import { AppContext } from "../context/AppContext";
+import styled from "styled-components";
 
-type ImageType = {
-  id: string;
-  author: string;
-  download_url: string;
-};
+import { AppContext } from "../context/AppContext";
+import Card from "../components/Card";
 
 function Saved() {
-  const { saved } = useContext(AppContext)!;
+  const { saved } = useContext(AppContext);
 
   return (
-    <div style={styles.container}>
-      <h2>You saved {saved.length} images</h2>
+    <Container>
+      <Title>You saved {saved.length} images</Title>
 
       {saved.length === 0 ? (
-        <p>No images selected</p>
+        <Text>No images selected</Text>
       ) : (
-        <div style={styles.grid}>
-          {saved.map((img: ImageType) => (
-            <div key={img.id} style={styles.card}>
-              <img src={img.download_url} width="100%" height={100} />
-              <p>{img.author}</p>
-            </div>
+        <Grid>
+          {saved.map((img) => (
+            <Card key={img.id} img={img} />
           ))}
-        </div>
+        </Grid>
       )}
-    </div>
+    </Container>
   );
 }
 
-const styles = {
-  container: {
-    maxWidth: "390px",
-    margin: "0 auto",
-    padding: 15
-  },
-  grid: {
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
-  gap: 15
-},
-  card: {
-    border: "1px solid black",
-    padding: 10,
-    width: "100%"
-  }
-};
-
 export default Saved;
+
+
+
+
+
+/* STYLES  */
+
+const Container = styled.div`
+  padding: 20px;
+`;
+
+const Title = styled.h2`
+  margin-bottom: 15px;
+`;
+
+const Text = styled.p`
+  color: ${({ theme }) => theme.colors.text};
+`;
+
+const Grid = styled.div`
+  display: grid;
+  gap: 15px;
+
+  
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+
+  
+  @media (max-width: 600px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+`;
